@@ -19,12 +19,23 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProviders.of(this).get(LoginViewModel::class.java)
     }
+    lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.viewmodel = viewModel
 
+
+        binding.buttonLogin.setOnClickListener({
+            viewModel.validarCredenciais(binding.textInputEditTextEmail.text.toString(), binding.textInputEditTextSenha.text.toString())
+        })
+
+        initObservers()
+
+    }
+
+    private fun initObservers() {
         viewModel.loginStateHandler.observe(this, Observer {
             when (it) {
                 is LoginStateHandler.setCarregando -> {
@@ -33,18 +44,18 @@ class LoginActivity : AppCompatActivity() {
                 }
                 is LoginStateHandler.setEmailError -> {
                     if (it.erro) {
-                        binding.textInputLayoutEmail?.error = getString(R.string.email_invalido)
-                        binding.textInputLayoutEmail?.isErrorEnabled = true
+                        binding.textInputLayoutEmail.error = getString(R.string.email_invalido)
+                        binding.textInputLayoutEmail.isErrorEnabled = true
                     } else {
-                        binding.textInputLayoutEmail?.isErrorEnabled = false
+                        binding.textInputLayoutEmail.isErrorEnabled = false
                     }
                 }
                 is LoginStateHandler.setSenhaError -> {
                     if (it.erro) {
-                        binding.textInputLayoutSenha?.error = getString(R.string.senha_invalida)
-                        binding.textInputLayoutSenha?.isErrorEnabled = true
+                        binding.textInputLayoutSenha.error = getString(R.string.senha_invalida)
+                        binding.textInputLayoutSenha.isErrorEnabled = true
                     } else {
-                        binding.textInputLayoutSenha?.isErrorEnabled = false
+                        binding.textInputLayoutSenha.isErrorEnabled = false
                     }
                 }
                 is LoginStateHandler.navegarParaHome -> {
@@ -56,7 +67,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         })
-
     }
 
     private fun setLoginError() {

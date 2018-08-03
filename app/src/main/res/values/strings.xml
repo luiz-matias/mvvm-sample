@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MVP Sample</string>
+    <string name="app_name">MVVM Sample</string>
     <string name="login">Login</string>
     <string name="email">E-mail</string>
     <string name="senha">Senha</string>

@@ -2,7 +2,6 @@ package com.luizmatias.mvvmsample.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import com.luizmatias.mvvmsample.SingleLiveEvent
 import com.luizmatias.mvvmsample.postDelayed
 
 class LoginViewModel(app: Application) : AndroidViewModel(app) {
@@ -36,7 +35,7 @@ class LoginViewModel(app: Application) : AndroidViewModel(app) {
                 email == "devmaker@devmaker.com" && senha == "123456" -> loginStateHandler.value = LoginStateHandler.navegarParaHome()
                 else -> loginStateHandler.value = LoginStateHandler.setLoginError()
             }
-            loginStateHandler.value = LoginStateHandler.setCarregando(true)
+            loginStateHandler.value = LoginStateHandler.setCarregando(false)
         }
     }
 

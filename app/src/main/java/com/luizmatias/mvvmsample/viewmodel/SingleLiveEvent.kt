@@ -1,4 +1,4 @@
-package com.luizmatias.mvvmsample
+package com.luizmatias.mvvmsample.viewmodel
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
