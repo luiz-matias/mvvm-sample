@@ -12,7 +12,6 @@ import com.luizmatias.mvvmsample.R
 import com.luizmatias.mvvmsample.databinding.ActivityLoginBinding
 import com.luizmatias.mvvmsample.viewmodel.LoginStateHandler
 import com.luizmatias.mvvmsample.viewmodel.LoginViewModel
-import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,9 +26,9 @@ class LoginActivity : AppCompatActivity() {
         binding.viewmodel = viewModel
 
 
-        binding.buttonLogin.setOnClickListener({
+        binding.buttonLogin.setOnClickListener {
             viewModel.validarCredenciais(binding.textInputEditTextEmail.text.toString(), binding.textInputEditTextSenha.text.toString())
-        })
+        }
 
         initObservers()
 
@@ -39,8 +38,8 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginStateHandler.observe(this, Observer {
             when (it) {
                 is LoginStateHandler.setCarregando -> {
-                    progressBarCarregando.visibility = if (it.carregando) View.VISIBLE else View.INVISIBLE
-                    progressBarCarregando.isIndeterminate = it.carregando
+                    binding.progressBarCarregando.visibility = if (it.carregando) View.VISIBLE else View.INVISIBLE
+                    binding.progressBarCarregando.isIndeterminate = it.carregando
                 }
                 is LoginStateHandler.setEmailError -> {
                     if (it.erro) {
@@ -74,9 +73,9 @@ class LoginActivity : AppCompatActivity() {
                 .Builder(this)
                 .setTitle(getString(R.string.erro_login_titulo))
                 .setMessage(getString(R.string.erro_login_descricao))
-                .setPositiveButton(getString(R.string.ok), { d, _ ->
+                .setPositiveButton(getString(R.string.ok)) { d, _ ->
                     d.dismiss()
-                })
+                }
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
