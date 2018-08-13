@@ -25,6 +25,12 @@ class HomeActivity : AppCompatActivity() {
         binding.viewmodel = viewModel
 
         initObservers()
+
+        binding.swipeRefreshLayoutAtualizar.setColorSchemeColors(getColor(R.color.colorPrimary), getColor(R.color.colorAccent))
+        binding.swipeRefreshLayoutAtualizar.setOnRefreshListener {
+            viewModel.loadUser("luiz-matias")
+        }
+
     }
 
     private fun initObservers() {
@@ -37,7 +43,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.homeStateHandler.observe(this, Observer {
             when (it) {
                 is HomeStateHandler.setError -> {
-                    Snackbar.make(binding.root, it.erro, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.root, it.erro, Snackbar.LENGTH_LONG).show()
                 }
             }
         })

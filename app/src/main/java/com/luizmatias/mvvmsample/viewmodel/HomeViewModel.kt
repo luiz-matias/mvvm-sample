@@ -17,7 +17,7 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
     }
     val homeStateHandler = SingleLiveEvent<HomeStateHandler>()
     private lateinit var subscription: Disposable
-    private lateinit var user: MutableLiveData<User>
+    private val user: MutableLiveData<User> = MutableLiveData()
     var isLoading: ObservableField<Boolean> = ObservableField()
 
     fun getUser(): MutableLiveData<User> {

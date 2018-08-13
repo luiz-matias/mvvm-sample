@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="user"
             type="com.luizmatias.mvvmsample.model.User" />
@@ -15,6 +17,7 @@
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/constraintLayoutRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.HomeActivity">
@@ -30,150 +33,165 @@
             app:title="@string/app_name"
             app:titleTextColor="@color/white" />
 
-        <ScrollView
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayoutAtualizar"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:refreshing="@{safeUnbox(viewmodel.isLoading())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <android.support.constraint.ConstraintLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingBottom="8dp">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    app:cardCornerRadius="4dp"
-                    app:cardElevation="4dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:clipToPadding="false"
+                    android:paddingBottom="8dp">
 
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cardViewProfile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:visibility="@{safeUnbox(!viewmodel.isLoading())?View.VISIBLE:View.INVISIBLE}"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
-                            android:id="@+id/imageViewAvatar"
-                            android:layout_width="96dp"
-                            android:layout_height="96dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            app:imageUrl="@{user.avatarUrl}"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/textViewNome"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:text="@{user.name}"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar" />
+                            <ImageView
+                                android:id="@+id/imageViewAvatar"
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="8dp"
+                                app:imageUrl="@{user.avatarUrl}"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/textViewBio"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@{user.bio}"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColorSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
+                            <TextView
+                                android:id="@+id/textViewNome"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:text="@{user.name}"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar" />
 
-                        <TextView
-                            android:id="@+id/textViewCountFollowers"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="32dp"
-                            android:text="@{user.followers}"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="20sp"
-                            app:layout_constraintEnd_toStartOf="@+id/textViewCountRepositories"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textViewBio" />
+                            <TextView
+                                android:id="@+id/textViewBio"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@{user.bio}"
+                                android:textAlignment="center"
+                                android:textColor="@color/textColorSecondary"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
 
-                        <TextView
-                            android:id="@+id/textViewCountRepositories"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="32dp"
-                            android:text="@{user.publicRepos}"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="20sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/textViewCountFollowers"
-                            app:layout_constraintTop_toBottomOf="@+id/textViewBio" />
+                            <TextView
+                                android:id="@+id/textViewCountFollowers"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="32dp"
+                                android:text="@{`` + user.followers}"
+                                android:textAlignment="center"
+                                android:textColor="@color/textColorPrimary"
+                                android:textSize="20sp"
+                                app:layout_constraintEnd_toStartOf="@+id/textViewCountRepositories"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewBio" />
 
-                        <TextView
-                            android:id="@+id/textViewFollowers"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/seguidores"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColorSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/textViewCountFollowers"
-                            app:layout_constraintStart_toStartOf="@+id/textViewCountFollowers"
-                            app:layout_constraintTop_toBottomOf="@+id/textViewCountFollowers" />
+                            <TextView
+                                android:id="@+id/textViewCountRepositories"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="32dp"
+                                android:text="@{`` + user.publicRepos}"
+                                android:textAlignment="center"
+                                android:textColor="@color/textColorPrimary"
+                                android:textSize="20sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/textViewCountFollowers"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewBio" />
 
-                        <TextView
-                            android:id="@+id/textViewRepositories"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/repositorios"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColorSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/textViewCountRepositories"
-                            app:layout_constraintStart_toStartOf="@+id/textViewCountRepositories"
-                            app:layout_constraintTop_toBottomOf="@+id/textViewCountRepositories" />
+                            <TextView
+                                android:id="@+id/textViewFollowers"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/seguidores"
+                                android:textAlignment="center"
+                                android:textColor="@color/textColorSecondary"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/textViewCountFollowers"
+                                app:layout_constraintStart_toStartOf="@+id/textViewCountFollowers"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewCountFollowers" />
 
-                    </android.support.constraint.ConstraintLayout>
+                            <TextView
+                                android:id="@+id/textViewRepositories"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/repositorios"
+                                android:textAlignment="center"
+                                android:textColor="@color/textColorSecondary"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/textViewCountRepositories"
+                                app:layout_constraintStart_toStartOf="@+id/textViewCountRepositories"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewCountRepositories" />
 
-                </android.support.v7.widget.CardView>
+                        </android.support.constraint.ConstraintLayout>
 
-            </android.support.constraint.ConstraintLayout>
+                    </android.support.v7.widget.CardView>
 
-        </ScrollView>
+                </android.support.constraint.ConstraintLayout>
+
+
+            </ScrollView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </android.support.constraint.ConstraintLayout>
 </layout>
