@@ -7,9 +7,13 @@
     <string name="senha_invalida">Senha inválida</string>
     <string name="erro_login_titulo">Login inválido</string>
     <string name="erro_login_descricao">Seu e-mail ou senha não coincidem com nossa base de dados.</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="logado">Logado com sucesso!</string>
     <string name="lorem_ipsum">Lorem Ipsum</string>
     <string name="repositorios">Repositórios</string>
     <string name="seguidores">Seguidores</string>
+    <string name="username">Username</string>
+    <string name="username_hint">Insira um username</string>
+    <string name="buscar">Buscar</string>
+    <string name="username_invalido">Username inválido ou não existente!</string>
 </resources>

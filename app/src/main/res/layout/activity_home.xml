@@ -37,11 +37,11 @@
             android:id="@+id/swipeRefreshLayoutAtualizar"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:refreshing="@{safeUnbox(viewmodel.isLoading())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:refreshing="@{safeUnbox(viewmodel.isLoading())}">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -57,6 +57,39 @@
                     android:clipToPadding="false"
                     android:paddingBottom="8dp">
 
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/tilUsername"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/tietUsername"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/username_hint"
+                            android:inputType="text" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/buttonBuscar"
+                        style="@style/DefaultButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/buscar"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilUsername" />
+
                     <android.support.v7.widget.CardView
                         android:id="@+id/cardViewProfile"
                         android:layout_width="0dp"
@@ -64,13 +97,13 @@
                         android:layout_marginBottom="8dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="32dp"
                         android:visibility="@{safeUnbox(!viewmodel.isLoading())?View.VISIBLE:View.INVISIBLE}"
                         app:cardCornerRadius="4dp"
                         app:cardElevation="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toBottomOf="@+id/buttonBuscar">
 
                         <android.support.constraint.ConstraintLayout
                             android:layout_width="match_parent"

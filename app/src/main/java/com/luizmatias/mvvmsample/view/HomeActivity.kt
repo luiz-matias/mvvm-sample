@@ -10,6 +10,7 @@ import com.luizmatias.mvvmsample.R
 import com.luizmatias.mvvmsample.databinding.ActivityHomeBinding
 import com.luizmatias.mvvmsample.viewmodel.HomeStateHandler
 import com.luizmatias.mvvmsample.viewmodel.HomeViewModel
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -26,10 +27,15 @@ class HomeActivity : AppCompatActivity() {
 
         initObservers()
 
-        binding.swipeRefreshLayoutAtualizar.setColorSchemeColors(getColor(R.color.colorPrimary), getColor(R.color.colorAccent))
+        binding.swipeRefreshLayoutAtualizar.setColorSchemeColors(getColor(R.color.colorAccent))
         binding.swipeRefreshLayoutAtualizar.setOnRefreshListener {
-            viewModel.loadUser("luiz-matias")
+            viewModel.loadUser(binding.tietUsername.text.toString())
         }
+
+        binding.buttonBuscar.setOnClickListener {
+            viewModel.loadUser(binding.tietUsername.text.toString())
+        }
+
 
     }
 
@@ -45,9 +51,11 @@ class HomeActivity : AppCompatActivity() {
                 is HomeStateHandler.setError -> {
                     Snackbar.make(binding.root, it.erro, Snackbar.LENGTH_LONG).show()
                 }
+                is HomeStateHandler.setSearchError -> {
+                    tilUsername.error = getString(R.string.username_invalido)
+                    tilUsername.isErrorEnabled = it.error
+                }
             }
         })
-
-        viewModel.loadUser("luiz-matias")
     }
 }

@@ -25,16 +25,30 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun loadUser(username: String) {
-        subscription = api.getUser(username)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { setLoading(true) }
-                .doOnTerminate { setLoading(false) }
-                .subscribe({
-                    onRetrievePostListSuccess(it)
-                }, {
-                    onRetrievePostListError(it)
-                })
+        if(username.isNotEmpty()){
+            homeStateHandler.value = HomeStateHandler.setSearchError(false)
+            subscription = api.getUser(username)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe {
+                        //início do loading
+                        setLoading(true)
+                    }
+                    .doOnTerminate {
+                        //término do loading
+                        setLoading(false)
+                    }
+                    .subscribe({
+                        //retornou com sucesso o response (nesse caso, um objeto User já serializado)
+                        onRetrievePostListSuccess(it)
+                    }, {
+                        //ocorreu um erro na request
+                        
+                        onRetrievePostListError(it)
+                    })
+        } else {
+            homeStateHandler.value = HomeStateHandler.setSearchError(true)
+        }
     }
 
     private fun setLoading(isLoading: Boolean) {
