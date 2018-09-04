@@ -7,7 +7,7 @@
 
         <variable
             name="user"
-            type="com.luizmatias.mvvmsample.model.User" />
+            type="com.luizmatias.mvvmsample.data.model.User" />
 
         <variable
             name="viewmodel"

@@ -3,21 +3,19 @@ package com.luizmatias.mvvmsample.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
 import android.databinding.ObservableField
-import com.luizmatias.mvvmsample.model.User
-import com.luizmatias.mvvmsample.repository.ApiFactory
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.luizmatias.mvvmsample.data.model.User
+import com.luizmatias.mvvmsample.data.repository.UserRepository
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel(app: Application) : AndroidViewModel(app) {
 
-    private val api by lazy {
-        ApiFactory.create()
-    }
     val homeStateHandler = SingleLiveEvent<HomeStateHandler>()
     private lateinit var subscription: Disposable
     private val user: MutableLiveData<User> = MutableLiveData()
+    private val repository: UserRepository = UserRepository.getInstance(getApplication() as Context)
     var isLoading: ObservableField<Boolean> = ObservableField()
 
     fun getUser(): MutableLiveData<User> {
@@ -25,25 +23,19 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun loadUser(username: String) {
-        if(username.isNotEmpty()){
+        if (username.isNotEmpty()) {
             homeStateHandler.value = HomeStateHandler.setSearchError(false)
-            subscription = api.getUser(username)
+            subscription = repository.getUserByLoginLocal(username)
                     .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
-                        //início do loading
                         setLoading(true)
                     }
                     .doOnTerminate {
-                        //término do loading
                         setLoading(false)
                     }
                     .subscribe({
-                        //retornou com sucesso o response (nesse caso, um objeto User já serializado)
                         onRetrievePostListSuccess(it)
                     }, {
-                        //ocorreu um erro na request
-                        
                         onRetrievePostListError(it)
                     })
         } else {
@@ -65,4 +57,8 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    override fun onCleared() {
+        subscription.dispose()
+        super.onCleared()
+    }
 }

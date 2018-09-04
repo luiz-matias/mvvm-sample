@@ -1,9 +1,12 @@
-package com.luizmatias.mvvmsample.model
+package com.luizmatias.mvvmsample.data.model
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class User(
-        @SerializedName("login") val login: String,
+        @PrimaryKey @SerializedName("login") val login: String,
         @SerializedName("id") val id: Int,
         @SerializedName("node_id") val nodeId: String,
         @SerializedName("avatar_url") val avatarUrl: String,

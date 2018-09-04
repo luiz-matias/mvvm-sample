@@ -1,6 +1,6 @@
-package com.luizmatias.mvvmsample.repository
+package com.luizmatias.mvvmsample.data.repository.remote
 
-import com.luizmatias.mvvmsample.model.User
+import com.luizmatias.mvvmsample.data.model.User
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
